@@ -1,9 +1,10 @@
 
-import './App.css';
+import Container from 'react-bootstrap/Button';
+import './App.scss';
 
 function App() {
 
-  return <div className="container">
+  return <Container>
             <header className="header">
                 <h1 className="header__title">What time is the meeting?</h1>
                 <div className="header__deskr">Plan your participation in international meetings. Check what time it will be in your area when the meeting takes place</div>
@@ -28,7 +29,7 @@ function App() {
                     <button className="msg__btn">Copy</button>
                 </div>
             </aside>
-        </div>
+        </Container>
      
   
 }
