@@ -1,4 +1,4 @@
-import Container from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
 
 import Header from '../header/Header';
 import InfoBlocks from '../infoBlocks/InfoBlocks';

@@ -1,0 +1,23 @@
+.msg {
+    padding-top: 100px;
+    padding-bottom: 100px;
+    margin: 0 auto;
+
+    &__text {
+        padding: 10px 20px;
+        min-width: 300px;
+        border: 1px solid #7AEE43;
+        border-radius: 10px;
+    }
+    &__btn {
+        background-color: #7AEE43;
+        border-radius: 10px;
+        border: none;
+        font-weight: 700;
+        font-size: 1.5rem;
+        line-height: 36px;
+        &:hover, &:focus, &:active {
+            background-color: #71c14d;
+        }
+    }
+}

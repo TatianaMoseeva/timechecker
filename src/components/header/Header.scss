@@ -1,0 +1,13 @@
+.header {
+    padding-top: 90px;
+    
+    &__title {
+        font-weight: 700;
+        font-size: 4rem;
+        color: #7AEE43;
+    }
+    &__descr {
+        padding-top: 20px;
+        line-height: 29px;
+    }
+}
