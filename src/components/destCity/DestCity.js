@@ -1,12 +1,24 @@
 import './DestCity.scss';
 
-function DestCity() {
+function DestCity({city, day, time}) {
 
     return  <div className="info-blocks__section dest">
                 <h2 className="info-blocks__title">Your location</h2>
-                <input type="text" placeholder='City'/>
-                <input type="text" placeholder='Day'/>
-                <input type="text" placeholder='Time'/>
+                <input 
+                    type="text" 
+                    placeholder='City' 
+                    value={city}
+                />
+                <input 
+                    type="date" 
+                    placeholder='Day'
+                    value={day}
+                />
+                <input 
+                    type="time" 
+                    placeholder='Time'
+                    value={time}
+                />
             </div>
        
     

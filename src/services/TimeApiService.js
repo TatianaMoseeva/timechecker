@@ -17,12 +17,17 @@ class TimeApiService {
         return await res.json();
     }
 
-    getTime =  () => {
-        return  this.getResource (`${this._apiBase}?${this._apiKey}&base_location=${this._baseLocation}&base_datetime=${this._baseDateTime}&target_location=${this._targetLocation}`);
+    getTargetTime = async () => {
+        const res = await this.getResource (`${this._apiBase}?${this._apiKey}&base_location=${this._baseLocation}&base_datetime=${this._baseDateTime}&target_location=${this._targetLocation}`);
+        
+        return this._extractTargetTime(res.target_location);
     }
 
-    test = () => {
-        return this.getResource('https://timezone.abstractapi.com/v1/convert_time/?api_key=4e2b5503e73e4530b9c2241753d53558&base_location=Los Angeles, CA&base_datetime=2020-05-01 07:00:00&target_location=Oxford, United Kingdom');
+    _extractTargetTime = (location) => {
+        return {
+            day: location.datetime.split(' ')[0],
+            time: location.datetime.split(' ')[1]
+        }
     }
 
 }
