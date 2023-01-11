@@ -3,9 +3,9 @@ class TimeApiService {
     _apiBase = 'https://timezone.abstractapi.com/v1/convert_time/';
     _apiKey = 'api_key=4e2b5503e73e4530b9c2241753d53558';
 
-    _baseLocation = 'Los Angeles, CA';
-    _baseDateTime = '2020-05-01 07:00:00';
-    _targetLocation = 'Oxford, United Kingdom';
+    _baseLocation = 'Sydney, NSW';
+    _baseDateTime = '2023-01-11 14:00:00';
+    _targetLocation = 'Los Angeles, CA';
 
     getResource = async (url) => {
         let res = await fetch(url);
