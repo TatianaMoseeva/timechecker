@@ -2,9 +2,9 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 
-import './Msg.scss';
+import './CopyMsg.scss';
 
-function Msg() {
+function CopyMsg() {
 
     return <aside className="msg">
                 <Row>
@@ -18,8 +18,6 @@ function Msg() {
                     </Col>
                 </Row>
             </aside>
-       
-    
   }
   
-  export default Msg;
+  export default CopyMsg;

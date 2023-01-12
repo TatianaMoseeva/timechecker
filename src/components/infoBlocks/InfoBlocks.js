@@ -5,7 +5,7 @@ import Loading from '../loading/Loading';
 import ErrorMsg from '../errorMsg/ErrorMsg';
 import DestCity from '../destCity/DestCity';
 import HostCity from '../hostCity/HostCity';
-import Msg from '../msg/Msg';
+import CopyMsg from '../copyMsg/CopyMsg';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -16,7 +16,7 @@ import './InfoBlocks.scss';
 function InfoBlocks() {
 
     const timeApiService = new TimeApiService();
-    timeApiService.getTime('Sydney, NSW', '2023-01-12', '16:00:00', 'Gold Coast, QLD').then(res => console.log(res));
+    // timeApiService.getTime('Sydney, NSW', '2023-01-12', '16:00:00', 'Gold Coast, QLD').then(res => console.log(res));
 
     const [value, setValue] = useState({});
     const [loading, setLoading] = useState(false);
@@ -65,7 +65,7 @@ const View = ({value, handleChange}) => {
                 <Col><HostCity city={baseCity} day={baseDay} time={baseTime} handleChange={handleChange}/></Col>
                 <Col><DestCity city={targetCity} day={targetDay} time={targetTime} handleChange={handleChange}/></Col>
             </Row>
-            <Msg />
+            <CopyMsg />
         </>
     )
 }

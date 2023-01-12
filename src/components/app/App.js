@@ -2,7 +2,7 @@ import Container from 'react-bootstrap/Container';
 
 import Header from '../header/Header';
 import InfoBlocks from '../infoBlocks/InfoBlocks';
-
+import ErrorBoundary from '../errorBoundary/ErrorBoundary';
 
 import './App.scss';
 
@@ -10,11 +10,10 @@ function App() {
 
   return <Container>
             <Header />
-            <InfoBlocks />
-            
+            <ErrorBoundary>
+                <InfoBlocks />
+            </ErrorBoundary>
         </Container>
-     
-  
 }
 
 export default App;
