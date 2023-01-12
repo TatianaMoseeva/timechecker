@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import TimeApiService from '../../services/TimeApiService';
 
+import Loading from '../loading/Loading';
 import DestCity from '../destCity/DestCity';
 import HostCity from '../hostCity/HostCity';
 
@@ -13,10 +14,14 @@ import './InfoBlocks.scss';
 function InfoBlocks() {
 
     const timeApiService = new TimeApiService();
-    // timeApiService.getTargetTime().then(res => console.log(res));
+    // timeApiService.getTime().then(res => console.log(res));
 
     const [value, setValue] = useState({});
     const {baseCity, baseDay, baseTime, targetCity, targetDay, targetTime} = value;
+    
+    const [loading, setLoading] = useState(true);
+    const spinner = loading ? <Loading/> : null;
+
 
     useEffect(() => {
         updateTime();
@@ -32,12 +37,14 @@ function InfoBlocks() {
             .then(onDataLoaded)
     }
     
+    
 
     function handleChange(prop, event) { 
 		setValue({...value, ...{[prop]: event.target.value}}); 
 	}
 
     return <main className="info-blocks">
+                {spinner}
                 <Row>
                     <Col><HostCity city={baseCity} day={baseDay} time={baseTime} handleChange={handleChange}/></Col>
                     <Col><DestCity city={targetCity} day={targetDay} time={targetTime} handleChange={handleChange}/></Col>
