@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import TimeApiService from '../../services/TimeApiService';
 
 import Loading from '../loading/Loading';
@@ -20,17 +20,12 @@ function InfoBlocks() {
 
     const [value, setValue] = useState({});
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(true);
+    const [error, setError] = useState(false);
 
     const onError = () => {
         setError(true);
         setLoading(false);
     }
-
-
-    // useEffect(() => {
-    //     updateTime();
-    // });
 
     const onDataLoaded = (value) => {
         setLoading(false);
@@ -59,21 +54,20 @@ function InfoBlocks() {
                 {content}
             </main>
 
-  }
+}
   
-    const View = ({value, handleChange}) => {
-        const {baseCity, baseDay, baseTime, targetCity, targetDay, targetTime} = value;
+const View = ({value, handleChange}) => {
+    const {baseCity, baseDay, baseTime, targetCity, targetDay, targetTime} = value;
 
-        return (
-            <>
-                <Row>
-                    <Col><HostCity city={baseCity} day={baseDay} time={baseTime} handleChange={handleChange}/></Col>
-                    <Col><DestCity city={targetCity} day={targetDay} time={targetTime} handleChange={handleChange}/></Col>
-                </Row>
-                <Msg />
-            </>
-
-        )
+    return (
+        <>
+            <Row>
+                <Col><HostCity city={baseCity} day={baseDay} time={baseTime} handleChange={handleChange}/></Col>
+                <Col><DestCity city={targetCity} day={targetDay} time={targetTime} handleChange={handleChange}/></Col>
+            </Row>
+            <Msg />
+        </>
+    )
 }
 
 

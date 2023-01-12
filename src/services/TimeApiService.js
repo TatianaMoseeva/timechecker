@@ -1,7 +1,7 @@
 class TimeApiService {
 
     _apiBase = 'https://timezone.abstractapi.com/v1/convert_time/';
-    _apiKey = 'api_key=4e2b5503e73e4530b9c2241753d53558';
+    _apiKey = 'api_key=421a695e2c314d2c83abcb80dbc389c8';
 
     _baseLocation = 'Los Angeles, CA';
     _baseDateTime = '2020-05-01 07:00:00';
@@ -28,22 +28,6 @@ class TimeApiService {
             targetCity: data.target_location.requested_location,
             targetDay: data.target_location.datetime.split(' ')[0],
             targetTime: data.target_location.datetime.split(' ')[1]
-        }
-    }
-
-
-
-    getTargetTime = async () => {
-        const res = await this.getResource (`${this._apiBase}?${this._apiKey}&base_location=${this._baseLocation}&base_datetime=${this._baseDateTime}&target_location=${this._targetLocation}`);
-        
-        return this._extractTargetTime(res.target_location);
-    }
-
-
-    _extractTargetTime = (location) => {
-        return {
-            day: location.datetime.split(' ')[0],
-            time: location.datetime.split(' ')[1]
         }
     }
 
