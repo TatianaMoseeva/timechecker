@@ -14,13 +14,15 @@ function DestCity({city, day, time, handleChange}) {
                     type="date" 
                     placeholder='Day'
                     value={day}
-                    onChange={event => handleChange('targetDay', event)}
+                    disabled={true}
+                    // onChange={event => handleChange('targetDay', event)}
                 />
                 <input 
                     type="time" 
                     placeholder='Time'
                     value={time}
-                    onChange={event => handleChange('targetTime', event)}
+                    disabled={true}
+                    // onChange={event => handleChange('targetTime', event)}
                 />
             </div>
        

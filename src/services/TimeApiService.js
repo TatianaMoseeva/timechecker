@@ -37,7 +37,6 @@ class TimeApiService {
         const res = await this.getResource (`${this._apiBase}?${this._apiKey}&base_location=${this._baseLocation}&base_datetime=${this._baseDateTime}&target_location=${this._targetLocation}`);
         
         return this._extractTargetTime(res.target_location);
-        // return this._extractApiData(res);
     }
 
 
