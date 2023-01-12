@@ -16,7 +16,7 @@ import './InfoBlocks.scss';
 function InfoBlocks() {
 
     const timeApiService = new TimeApiService();
-    // timeApiService.getTime().then(res => console.log(res));
+    timeApiService.getTime('Sydney, NSW', '2023-01-12', '16:00:00', 'Gold Coast, QLD').then(res => console.log(res));
 
     const [value, setValue] = useState({});
     const [loading, setLoading] = useState(false);

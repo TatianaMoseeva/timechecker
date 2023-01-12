@@ -15,8 +15,8 @@ class TimeApiService {
         return await res.json();
     }
 
-    getTime = async () => {
-        const res = await this.getResource (`${this._apiBase}?${this._apiKey}&base_location=${this._baseLocation}&base_datetime=${this._baseDateTime}&target_location=${this._targetLocation}`);
+    getTime = async (baseCity, baseDate, baseTime, targetCity) => {
+        const res = await this.getResource (`${this._apiBase}?${this._apiKey}&base_location=${baseCity}&base_datetime=${baseDate} ${baseTime}&target_location=${targetCity}`);
         return this._extractApiData(res);
     }
 
