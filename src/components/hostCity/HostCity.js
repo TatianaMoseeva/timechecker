@@ -24,8 +24,6 @@ function HostCity({city, day, time, handleChange}) {
                     onChange={event => handleChange('baseTime', event)}
                 />
             </div>
-       
-    
   }
   
   export default HostCity;
