@@ -26,18 +26,23 @@ function InfoBlocks() {
         console.log('!');
     }, [value.targetDay])
 
-    
+
     const onError = () => {
         setError(true);
         setLoading(false);
     }
 
+    const onCharLoading = () => {
+        setLoading(true);
+    }
+
     const onDataLoaded = (time) => {
         setLoading(false);
-        setValue( {...value, ...time});
+        setValue({...value, ...time});
     }
 
     const updateTime = () => {
+        onCharLoading();
         timeApiService
             .getTargetTime(value.baseCity, value.baseDay, value.baseTime, value.targetCity)
             .then(onDataLoaded)
@@ -53,7 +58,6 @@ function InfoBlocks() {
     function finishEdit() {
         if (value.baseCity !== '' && value.baseDay !== '' && value.baseTime !== '' && value.targetCity !== '') {
             updateTime();
-            console.log (value);
         } 
     }
     
@@ -76,7 +80,7 @@ const View = ({value, handleChange, finishEdit}) => {
         <>
             <Row>
                 <Col><HostCity city={baseCity} day={baseDay} time={baseTime} handleChange={handleChange}/></Col>
-                <Col><DestCity city={targetCity} day={targetDay} time={targetTime} handleChange={handleChange} finishEdit={finishEdit}/></Col>
+                <Col><DestCity city={targetCity} day={targetDay} time={targetTime} handleChange={handleChange} finishEdit={finishEdit} /></Col>
             </Row>
             <CopyMsg />
         </>
