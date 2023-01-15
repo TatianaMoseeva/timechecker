@@ -1,6 +1,12 @@
 import './DestCity.scss';
 
-function DestCity({city, day, time, handleChange, finishEdit}) {
+
+
+function DestCity({city, day, time, handleChange, finishEdit, loading}) {
+    let loadClass = "";
+    if (loading) {
+        loadClass+="loading";
+    }
 
     return  <div className="info-blocks__section dest">
                 <h2 className="info-blocks__title">Your location</h2>
@@ -16,15 +22,17 @@ function DestCity({city, day, time, handleChange, finishEdit}) {
                     placeholder='Day'
                     value={day}
                     readOnly={true}
+                    className={loadClass}
+
                 />
                 <input 
                     type="time" 
                     placeholder='Time'
                     value={time}
                     readOnly={true}
+                    className={loadClass}
                 />
             </div>
-       
     
   }
   

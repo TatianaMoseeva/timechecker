@@ -16,7 +16,6 @@ import './InfoBlocks.scss';
 function InfoBlocks() {
 
     const timeApiService = new TimeApiService();
-    // timeApiService.getTargetTime('Sydney, NSW', '2023-01-12', '16:00:00', 'Gold Coast, QLD').then(res => console.log(res));
 
     const [value, setValue] = useState({baseCity: '', baseDay: '', baseTime: '', targetCity: '', targetDay: '', targetTime: ''});
     const [loading, setLoading] = useState(false);
@@ -62,25 +61,26 @@ function InfoBlocks() {
     }
     
     const errorMsg = error ? <ErrorMsg/> : null;
-    const spinner = loading ? <Loading/> : null;
-    const content = !(loading || error) ? <View value={value} handleChange={handleChange} finishEdit={finishEdit}/> : null;
+    // const spinner = loading ? <Loading/> : null;
+    // const content = !(loading || error) ? <View value={value} handleChange={handleChange} finishEdit={finishEdit} loading={loading}/> : null;
+    const content = !(error) ? <View value={value} handleChange={handleChange} finishEdit={finishEdit} loading={loading}/> : null;
 
     return <main className="info-blocks">
                 {errorMsg}
-                {spinner}
+                {/* {spinner} */}
                 {content}
             </main>
 
 }
   
-const View = ({value, handleChange, finishEdit}) => {
+const View = ({value, handleChange, finishEdit, loading}) => {
     const {baseCity, baseDay, baseTime, targetCity, targetDay, targetTime} = value;
 
     return (
         <>
             <Row>
                 <Col><HostCity city={baseCity} day={baseDay} time={baseTime} handleChange={handleChange}/></Col>
-                <Col><DestCity city={targetCity} day={targetDay} time={targetTime} handleChange={handleChange} finishEdit={finishEdit} /></Col>
+                <Col><DestCity city={targetCity} day={targetDay} time={targetTime} handleChange={handleChange} finishEdit={finishEdit} loading={loading}/></Col>
             </Row>
             <CopyMsg />
         </>
