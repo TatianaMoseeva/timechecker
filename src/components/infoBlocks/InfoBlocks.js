@@ -78,7 +78,7 @@ const View = ({value, handleChange, finishEdit, loading}) => {
 
     return (
         <>
-            <Row>
+            <Row xs={1} sm={2}>
                 <Col><HostCity city={baseCity} day={baseDay} time={baseTime} handleChange={handleChange}/></Col>
                 <Col><DestCity city={targetCity} day={targetDay} time={targetTime} handleChange={handleChange} finishEdit={finishEdit} loading={loading}/></Col>
             </Row>
