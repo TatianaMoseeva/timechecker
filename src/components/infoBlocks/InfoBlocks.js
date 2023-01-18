@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import TimeApiService from '../../services/TimeApiService';
 
 import ErrorMsg from '../errorMsg/ErrorMsg';
-import DestCity from '../destCity/DestCity';
+import TargetCity from '../targetCity/TargetCity';
 import HostCity from '../hostCity/HostCity';
 import CopyMsg from '../copyMsg/CopyMsg';
 
@@ -85,7 +85,7 @@ const View = ({value, handleChange, dateChange, timeChange, finishEdit, loading}
         <>
             <Row xs={1} sm={2}>
                 <Col><HostCity dateChange={dateChange} timeChange={timeChange} city={baseCity} day={baseDay} time={baseTime} handleChange={handleChange} /></Col>
-                <Col><DestCity city={targetCity} day={targetDay} time={targetTime} handleChange={handleChange} finishEdit={finishEdit} loading={loading}/></Col>
+                <Col><TargetCity city={targetCity} day={targetDay} time={targetTime} handleChange={handleChange} finishEdit={finishEdit} loading={loading}/></Col>
             </Row>
             <CopyMsg />
         </>

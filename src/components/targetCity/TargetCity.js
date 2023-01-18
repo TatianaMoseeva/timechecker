@@ -1,8 +1,8 @@
-import './DestCity.scss';
+import './TargetCity.scss';
 
 
 
-function DestCity({city, day, time, handleChange, finishEdit, loading}) {
+function TargetCity({city, day, time, handleChange, finishEdit, loading}) {
     let loadClass = "";
     if (loading) {
         loadClass+="loading";
@@ -36,4 +36,4 @@ function DestCity({city, day, time, handleChange, finishEdit, loading}) {
     
   }
   
-  export default DestCity;
+  export default TargetCity;
