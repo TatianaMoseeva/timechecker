@@ -1,7 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import TimeApiService from '../../services/TimeApiService';
 
-import Loading from '../loading/Loading';
 import ErrorMsg from '../errorMsg/ErrorMsg';
 import DestCity from '../destCity/DestCity';
 import HostCity from '../hostCity/HostCity';
@@ -21,11 +20,7 @@ function InfoBlocks() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
-    useEffect(() => {
-        console.log('!');
-    }, [value.targetDay])
-
-
+    
     const onError = () => {
         setError(true);
         setLoading(false);
@@ -48,38 +43,40 @@ function InfoBlocks() {
             .catch(onError);
     }
     
-    function handleChange(prop, event) { 
+    const dateChange = date => setValue({...value, ...{baseDay: date}});
+
+    function handleChange(prop, event) {
+
 		setValue({...value, ...{[prop]: event.target.value}});
         event.preventDefault();
 	}
 
-
     function finishEdit() {
         if (value.baseCity !== '' && value.baseDay !== '' && value.baseTime !== '' && value.targetCity !== '') {
             updateTime();
-        } 
+        }else {
+            console.log(value);
+        }
     }
     
     const errorMsg = error ? <ErrorMsg/> : null;
-    // const spinner = loading ? <Loading/> : null;
-    // const content = !(loading || error) ? <View value={value} handleChange={handleChange} finishEdit={finishEdit} loading={loading}/> : null;
-    const content = !(error) ? <View value={value} handleChange={handleChange} finishEdit={finishEdit} loading={loading}/> : null;
+    
+    const content = !(error) ? <View value={value} dateChange={dateChange} handleChange={handleChange} finishEdit={finishEdit} loading={loading}/> : null;
 
     return <main className="info-blocks">
                 {errorMsg}
-                {/* {spinner} */}
                 {content}
             </main>
 
 }
   
-const View = ({value, handleChange, finishEdit, loading}) => {
+const View = ({value, handleChange, dateChange, finishEdit, loading}) => {
     const {baseCity, baseDay, baseTime, targetCity, targetDay, targetTime} = value;
 
     return (
         <>
             <Row xs={1} sm={2}>
-                <Col><HostCity city={baseCity} day={baseDay} time={baseTime} handleChange={handleChange}/></Col>
+                <Col><HostCity dateChange={dateChange} city={baseCity} day={baseDay} time={baseTime} handleChange={handleChange} /></Col>
                 <Col><DestCity city={targetCity} day={targetDay} time={targetTime} handleChange={handleChange} finishEdit={finishEdit} loading={loading}/></Col>
             </Row>
             <CopyMsg />
