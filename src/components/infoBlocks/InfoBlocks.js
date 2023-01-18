@@ -16,7 +16,7 @@ function InfoBlocks() {
 
     const timeApiService = new TimeApiService();
 
-    const [value, setValue] = useState({baseCity: '', baseDay: '', baseTime: '', targetCity: '', targetDay: '', targetTime: ''});
+    const [value, setValue] = useState({baseCity: '', baseDay: new Date(), baseTime: new Date(), targetCity: '', targetDay: '', targetTime: ''});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
@@ -37,16 +37,26 @@ function InfoBlocks() {
 
     const updateTime = () => {
         onCharLoading();
+
+        let day = value.baseDay.getFullYear() + '-' + value.baseDay.getMonth()+1 + '-' + value.baseDay.getDate();
+        let time = value.baseTime.getHours() + ':' + value.baseTime.getMinutes();
+
         timeApiService
-            .getTargetTime(value.baseCity, value.baseDay, value.baseTime, value.targetCity)
+            .getTargetTime(value.baseCity, day, time, value.targetCity)
             .then(onDataLoaded)
             .catch(onError);
     }
     
-    const dateChange = date => setValue({...value, ...{baseDay: date}});
+
+    function dateChange(date) {
+		setValue({...value, ...{baseDay: date}});
+	}
+
+    function timeChange(date) {
+		setValue({...value, ...{baseTime: date}});
+	}
 
     function handleChange(prop, event) {
-
 		setValue({...value, ...{[prop]: event.target.value}});
         event.preventDefault();
 	}
@@ -54,14 +64,12 @@ function InfoBlocks() {
     function finishEdit() {
         if (value.baseCity !== '' && value.baseDay !== '' && value.baseTime !== '' && value.targetCity !== '') {
             updateTime();
-        }else {
-            console.log(value);
         }
     }
     
     const errorMsg = error ? <ErrorMsg/> : null;
     
-    const content = !(error) ? <View value={value} dateChange={dateChange} handleChange={handleChange} finishEdit={finishEdit} loading={loading}/> : null;
+    const content = !(error) ? <View value={value} dateChange={dateChange} timeChange={timeChange} handleChange={handleChange} finishEdit={finishEdit} loading={loading}/> : null;
 
     return <main className="info-blocks">
                 {errorMsg}
@@ -70,13 +78,13 @@ function InfoBlocks() {
 
 }
   
-const View = ({value, handleChange, dateChange, finishEdit, loading}) => {
+const View = ({value, handleChange, dateChange, timeChange, finishEdit, loading}) => {
     const {baseCity, baseDay, baseTime, targetCity, targetDay, targetTime} = value;
 
     return (
         <>
             <Row xs={1} sm={2}>
-                <Col><HostCity dateChange={dateChange} city={baseCity} day={baseDay} time={baseTime} handleChange={handleChange} /></Col>
+                <Col><HostCity dateChange={dateChange} timeChange={timeChange} city={baseCity} day={baseDay} time={baseTime} handleChange={handleChange} /></Col>
                 <Col><DestCity city={targetCity} day={targetDay} time={targetTime} handleChange={handleChange} finishEdit={finishEdit} loading={loading}/></Col>
             </Row>
             <CopyMsg />

@@ -4,7 +4,7 @@ import './HostCity.scss';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-function HostCity({city, day, time, handleChange, dateChange}) {
+function HostCity({city, day, time, handleChange, dateChange, timeChange}) {
 
     return  <div className="info-blocks__section host">
                 <h2 className="info-blocks__title">Host city</h2>
@@ -22,8 +22,8 @@ function HostCity({city, day, time, handleChange, dateChange}) {
                 />
 
                 <DatePicker 
-                    selected={day}
-                    onChange={dateChange}
+                    selected={time}
+                    onChange={timeChange}
                     showTimeSelect
                     showTimeSelectOnly
                     timeIntervals={30}
