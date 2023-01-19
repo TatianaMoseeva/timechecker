@@ -17,14 +17,14 @@ function TargetCity({city, day, time, handleChange, finishEdit, loading}) {
                 />
                 <input 
                     type="text" 
-                    placeholder='Day'
+                    placeholder='Day in your location'
                     value={day}
                     readOnly={true}
                     className={loadClass}
                 />
                 <input 
                     type="text" 
-                    placeholder='Time'
+                    placeholder='Time in your location'
                     value={time}
                     readOnly={true}
                     className={loadClass}

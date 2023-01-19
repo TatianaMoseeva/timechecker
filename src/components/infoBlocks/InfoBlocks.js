@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import TimeApiService from '../../services/TimeApiService';
+import GeoApiService from '../../services/GeoApiService';
 
 import ErrorMsg from '../errorMsg/ErrorMsg';
 import TargetCity from '../targetCity/TargetCity';
@@ -15,17 +16,34 @@ import './InfoBlocks.scss';
 function InfoBlocks() {
 
     const timeApiService = new TimeApiService();
+    const geoApiService = new GeoApiService();
+
+
+
 
     const [value, setValue] = useState({baseCity: '', baseDay: new Date(), baseTime: new Date(), targetCity: '', targetDay: '', targetTime: ''});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
-    
+
+
+
     const onError = () => {
         setError(true);
         setLoading(false);
     }
 
+    const onLocationRecieved = (city) => {
+        setValue({...value, ...city});
+    }
+
+    const prefillCity = () => {
+        geoApiService
+            .getUserLocation()
+            .then(onLocationRecieved)
+            .catch(onError);
+    }
+    
     const onCharLoading = () => {
         setLoading(true);
     }
@@ -64,7 +82,6 @@ function InfoBlocks() {
     function finishEdit() {
         if (value.baseCity !== '' && value.baseDay !== '' && value.baseTime !== '' && value.targetCity !== '') {
             updateTime();
-            console.log(value.targetDay);
         }
     }
     
@@ -85,7 +102,7 @@ const View = ({value, handleChange, dateChange, timeChange, finishEdit, loading}
     return (
         <>
             <Row xs={1} sm={2}>
-                <Col><HostCity dateChange={dateChange} timeChange={timeChange} city={baseCity} day={baseDay} time={baseTime} handleChange={handleChange} /></Col>
+                <Col><HostCity dateChange={dateChange} timeChange={timeChange} city={baseCity} day={baseDay} time={baseTime} handleChange={handleChange} finishEdit={finishEdit}/></Col>
                 <Col><TargetCity city={targetCity} day={targetDay} time={targetTime} handleChange={handleChange} finishEdit={finishEdit} loading={loading}/></Col>
             </Row>
             <CopyMsg />
