@@ -18,14 +18,9 @@ function InfoBlocks() {
     const timeApiService = new TimeApiService();
     const geoApiService = new GeoApiService();
 
-
-
-
     const [value, setValue] = useState({baseCity: '', baseDay: new Date(), baseTime: new Date(), targetCity: '', targetDay: '', targetTime: ''});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
-
-
 
 
     const onError = () => {
@@ -35,6 +30,7 @@ function InfoBlocks() {
 
     const onLocationRecieved = (city) => {
         setValue({...value, ...city});
+        console.log('!');
     }
 
     const prefillCity = () => {
@@ -68,6 +64,7 @@ function InfoBlocks() {
 
     function dateChange(date) {
 		setValue({...value, ...{baseDay: date}});
+        
 	}
 
     function timeChange(date) {
@@ -87,7 +84,7 @@ function InfoBlocks() {
     
     const errorMsg = error ? <ErrorMsg/> : null;
     
-    const content = !(error) ? <View value={value} dateChange={dateChange} timeChange={timeChange} handleChange={handleChange} finishEdit={finishEdit} loading={loading}/> : null;
+    const content = !(error) ? <View value={value} dateChange={dateChange} timeChange={timeChange} handleChange={handleChange} finishEdit={finishEdit} loading={loading} prefillCity={prefillCity}/> : null;
 
     return <main className="info-blocks">
                 {errorMsg}
@@ -96,14 +93,14 @@ function InfoBlocks() {
 
 }
   
-const View = ({value, handleChange, dateChange, timeChange, finishEdit, loading}) => {
+const View = ({value, handleChange, dateChange, timeChange, finishEdit, loading, prefillCity}) => {
     const {baseCity, baseDay, baseTime, targetCity, targetDay, targetTime} = value;
 
     return (
         <>
             <Row xs={1} sm={2}>
                 <Col><HostCity dateChange={dateChange} timeChange={timeChange} city={baseCity} day={baseDay} time={baseTime} handleChange={handleChange} finishEdit={finishEdit}/></Col>
-                <Col><TargetCity city={targetCity} day={targetDay} time={targetTime} handleChange={handleChange} finishEdit={finishEdit} loading={loading}/></Col>
+                <Col><TargetCity city={targetCity} day={targetDay} time={targetTime} handleChange={handleChange} finishEdit={finishEdit} loading={loading} prefillCity={prefillCity}/></Col>
             </Row>
             <CopyMsg />
         </>

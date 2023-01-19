@@ -1,6 +1,14 @@
 import './TargetCity.scss';
+import React, {useEffect} from 'react';
 
-function TargetCity({city, day, time, handleChange, finishEdit, loading}) {
+function TargetCity({city, day, time, handleChange, finishEdit, loading, prefillCity}) {
+
+    useEffect(() => {
+        prefillCity();
+        // eslint-disable-next-line
+    }, [])
+
+
     let loadClass = "";
     if (loading) {
         loadClass+="loading";
