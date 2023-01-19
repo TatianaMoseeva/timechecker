@@ -42,7 +42,7 @@ function InfoBlocks() {
         let time = value.baseTime.getHours() + ':' + value.baseTime.getMinutes();
 
         timeApiService
-            .getTargetTime(value.baseCity, day, time, value.targetCity)
+            .getTargetData(value.baseCity, day, time, value.targetCity)
             .then(onDataLoaded)
             .catch(onError);
     }
@@ -64,6 +64,7 @@ function InfoBlocks() {
     function finishEdit() {
         if (value.baseCity !== '' && value.baseDay !== '' && value.baseTime !== '' && value.targetCity !== '') {
             updateTime();
+            console.log(value.targetDay);
         }
     }
     

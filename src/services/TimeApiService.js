@@ -11,36 +11,51 @@ class TimeApiService {
         return await res.json();
     }
 
-    getTime = async (baseCity, baseDate, baseTime, targetCity) => {
-        const res = await this.getResource (`${this._apiBase}?${this._apiKey}&base_location=${baseCity}&base_datetime=${baseDate} ${baseTime}&target_location=${targetCity}`);
-        return this._extractApiData(res);
-    }
-
-    _extractApiData = (data) => {
-        return {
-            baseCity: data.base_location.requested_location,
-            baseDay: data.base_location.datetime.split(' ')[0],
-            baseTime: data.base_location.datetime.split(' ')[1],
-            targetCity: data.target_location.requested_location,
-            targetDay: data.target_location.datetime.split(' ')[0],
-            targetTime: data.target_location.datetime.split(' ')[1]
-        }
-    }
-
-    getTargetTime = async (baseCity, baseDate, baseTime, targetCity) => {
+    getTargetData = async (baseCity, baseDate, baseTime, targetCity) => {
         const res = await this.getResource (`${this._apiBase}?${this._apiKey}&base_location=${baseCity}&base_datetime=${baseDate} ${baseTime}&target_location=${targetCity}`);
 
-        return this._extractTargetTime(res.target_location);
+        return this._extractTargetData(res.target_location);
         
     }
 
-    _extractTargetTime = (location) => {
+    _extractTargetData = (location) => {
         return {
-            targetDay: location.datetime.split(' ')[0],
-            targetTime: location.datetime.split(' ')[1]
+            targetDay: this._editTargetDay(location.datetime.split(' ')[0]),
+            targetTime: this._editTargetTime(location.datetime.split(' ')[1])
         }
+    }
+
+    _editTargetDay = (day) => {
+        let array = day.split('-');
+        let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        array[1] = months[Number(array[1]-1)];
+
+        return array.reverse().join('-');
+    }
+
+    _editTargetTime = (time) => {
+        let hour = time.slice(0, 2);
+        let minute = ':' + time.slice(3, 5);
+        let result;
+        
+        if (hour === '12') {
+            result = hour + minute + ' PM';
+        } else if (hour > 12 ) {
+            if(hour < 22) {
+                result = '0' + String(hour - 12) + minute + ' PM'; 
+            } else {
+                result = String(hour - 12) + minute + ' PM';
+            }
+        } else {
+            result = hour + minute + ' AM';
+        }
+        return result;
     }
 
 }
 
 export default TimeApiService;
+
+
+
+

@@ -1,7 +1,5 @@
 import './TargetCity.scss';
 
-
-
 function TargetCity({city, day, time, handleChange, finishEdit, loading}) {
     let loadClass = "";
     if (loading) {
@@ -12,21 +10,20 @@ function TargetCity({city, day, time, handleChange, finishEdit, loading}) {
                 <h2 className="info-blocks__title">Your location</h2>
                 <input 
                     type="text" 
-                    placeholder='City' 
+                    placeholder='City'
                     value={city}
                     onChange={event => handleChange('targetCity', event)}
                     onBlur={finishEdit}
                 />
                 <input 
-                    type="date" 
+                    type="text" 
                     placeholder='Day'
                     value={day}
                     readOnly={true}
                     className={loadClass}
-
                 />
                 <input 
-                    type="time" 
+                    type="text" 
                     placeholder='Time'
                     value={time}
                     readOnly={true}
