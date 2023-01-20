@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import TimeApiService from '../../services/TimeApiService';
 import GeoApiService from '../../services/GeoApiService';
+import AutocompleteApiService from '../../services/AutocompleteApiService';
 
 import ErrorMsg from '../errorMsg/ErrorMsg';
 import TargetCity from '../targetCity/TargetCity';
@@ -17,6 +18,8 @@ function InfoBlocks() {
 
     const timeApiService = new TimeApiService();
     const geoApiService = new GeoApiService();
+    const autocompleteApiService = new AutocompleteApiService();
+
 
     const [value, setValue] = useState({baseCity: '', baseDay: new Date(), baseTime: new Date(), targetCity: '', targetDay: '', targetTime: ''});
     const [loading, setLoading] = useState(false);
@@ -28,9 +31,28 @@ function InfoBlocks() {
         setLoading(false);
     }
 
+    const onUserInput = (input) => {
+        if (input.length >= 3) {
+            setTimeout(() => {
+                autocompeteCity(input);
+            }, 300)
+        }
+    }
+
+    const showItems = (data) => {
+        console.log(data);
+    }
+
+    const autocompeteCity = (input) => {
+
+        autocompleteApiService
+            .getItems(input)
+            .then(showItems)
+            .catch(onError);
+    }
+
     const onLocationRecieved = (city) => {
         setValue({...value, ...city});
-        console.log('!');
     }
 
     const prefillCity = () => {
@@ -40,7 +62,7 @@ function InfoBlocks() {
             .catch(onError);
     }
     
-    const onCharLoading = () => {
+    const onDataLoading = () => {
         setLoading(true);
     }
 
@@ -49,11 +71,19 @@ function InfoBlocks() {
         setValue({...value, ...time});
     }
 
-    const updateTime = () => {
-        onCharLoading();
+    function normalizeNumb(num) {
+        let newNum = String(num);
+        if (String(num).length === 1) {
+            newNum = '0' + String(num);
+        }
+        return newNum;
+    }
 
-        let day = value.baseDay.getFullYear() + '-' + value.baseDay.getMonth()+1 + '-' + value.baseDay.getDate();
-        let time = value.baseTime.getHours() + ':' + value.baseTime.getMinutes();
+    const updateTime = () => {
+        onDataLoading();
+
+        let day = value.baseDay.getFullYear() + '-' + value.baseDay.getMonth()+1 + '-' + normalizeNumb(value.baseDay.getDate());
+        let time = normalizeNumb(value.baseTime.getHours()) + ':' + value.baseTime.getMinutes();
 
         timeApiService
             .getTargetData(value.baseCity, day, time, value.targetCity)
@@ -61,11 +91,15 @@ function InfoBlocks() {
             .catch(onError);
     }
     
-
     function dateChange(date) {
-		setValue({...value, ...{baseDay: date}});
-        
+        setValue({...value, ...{baseDay: date}})
 	}
+
+    function finishEdit() {
+        if (value.baseCity !== '' && value.targetCity !== '') {
+            updateTime();
+        }
+    }
 
     function timeChange(date) {
 		setValue({...value, ...{baseTime: date}});
@@ -74,13 +108,12 @@ function InfoBlocks() {
     function handleChange(prop, event) {
 		setValue({...value, ...{[prop]: event.target.value}});
         event.preventDefault();
+        if (value.baseCity.length > 2) {
+            onUserInput(value.baseCity); //реагирует только когда напечатано 4 символа
+        }
 	}
 
-    function finishEdit() {
-        if (value.baseCity !== '' && value.baseDay !== '' && value.baseTime !== '' && value.targetCity !== '') {
-            updateTime();
-        }
-    }
+
     
     const errorMsg = error ? <ErrorMsg/> : null;
     
