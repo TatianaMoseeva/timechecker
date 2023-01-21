@@ -21,12 +21,10 @@ function InfoBlocks() {
     const geoApiService = new GeoApiService();
     const autocompleteApiService = new AutocompleteApiService();
 
-
     const [value, setValue] = useState({baseCity: '', baseDay: new Date(), baseTime: new Date(), targetCity: '', targetDay: '', targetTime: ''});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
-    const [autocomplete, setAutocomplete] = useState(false);
 
     const onError = () => {
         setError(true);
@@ -34,39 +32,25 @@ function InfoBlocks() {
     }
 
     useEffect(() => {
-        setAutocomplete(false);
-        onUserInput(value.baseCity);
-
+        if (value.baseCity.length >=3) {
+            const currentTimeout = setTimeout(() => {
+                autocompleteCity(value.baseCity);
+              }, 1000);
+              return () => clearTimeout(currentTimeout);
+        }
+        // eslint-disable-next-line
     }, [value.baseCity]);
 
-    const onUserInput = (input) => {
-        if(input.length >=3) {
-            timeoutFunc(input);
-        }
-    }
 
-    const timeoutFunc = (input) => {
-        let currentTimeout = null;
-        clearTimeout(currentTimeout);
-        currentTimeout = setTimeout(onUserInputted, 1000, input);
-    }
-
-    const onUserInputted = (input) => {
-        setAutocomplete(true);
-        autocompleteCity(input);
+    const autocompleteCity = (input) => {
+        autocompleteApiService
+            .getItems(input)
+            .then(showItems)
+            .catch(onError);
     }
 
     const showItems = (data) => {
         console.log(data);
-    }
-
-    const autocompleteCity = (input) => {
-        if(autocomplete) {
-            autocompleteApiService
-            .getItems(input)
-            .then(showItems)
-            .catch(onError);
-        }
     }
 
     function handleChange(prop, event) {

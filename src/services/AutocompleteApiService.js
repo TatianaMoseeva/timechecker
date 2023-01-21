@@ -26,9 +26,6 @@ class AutocompleteApiService {
         }
     }
 
-
 }
 
 export default AutocompleteApiService;
-
-
