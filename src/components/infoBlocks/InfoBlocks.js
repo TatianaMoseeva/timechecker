@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import TimeApiService from '../../services/TimeApiService';
 import GeoApiService from '../../services/GeoApiService';
 import AutocompleteApiService from '../../services/AutocompleteApiService';
@@ -10,6 +10,7 @@ import CopyMsg from '../copyMsg/CopyMsg';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+
 
 import './InfoBlocks.scss';
 
@@ -25,31 +26,53 @@ function InfoBlocks() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
+    const [autocomplete, setAutocomplete] = useState(false);
 
     const onError = () => {
         setError(true);
         setLoading(false);
     }
 
+    useEffect(() => {
+        setAutocomplete(false);
+        onUserInput(value.baseCity);
+
+    }, [value.baseCity]);
+
     const onUserInput = (input) => {
-        if (input.length >= 3) {
-            setTimeout(() => {
-                autocompeteCity(input);
-            }, 300)
+        if(input.length >=3) {
+            timeoutFunc(input);
         }
+    }
+
+    const timeoutFunc = (input) => {
+        let currentTimeout = null;
+        clearTimeout(currentTimeout);
+        currentTimeout = setTimeout(onUserInputted, 1000, input);
+    }
+
+    const onUserInputted = (input) => {
+        setAutocomplete(true);
+        autocompleteCity(input);
     }
 
     const showItems = (data) => {
         console.log(data);
     }
 
-    const autocompeteCity = (input) => {
-
-        autocompleteApiService
+    const autocompleteCity = (input) => {
+        if(autocomplete) {
+            autocompleteApiService
             .getItems(input)
             .then(showItems)
             .catch(onError);
+        }
     }
+
+    function handleChange(prop, event) {
+		setValue({...value, ...{[prop]: event.target.value}});
+        event.preventDefault();
+	}
 
     const onLocationRecieved = (city) => {
         setValue({...value, ...city});
@@ -105,13 +128,7 @@ function InfoBlocks() {
 		setValue({...value, ...{baseTime: date}});
 	}
 
-    function handleChange(prop, event) {
-		setValue({...value, ...{[prop]: event.target.value}});
-        event.preventDefault();
-        if (value.baseCity.length > 2) {
-            onUserInput(value.baseCity); //реагирует только когда напечатано 4 символа
-        }
-	}
+
 
 
     

@@ -4,10 +4,12 @@ import './HostCity.scss';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+
 function HostCity({city, day, time, handleChange, dateChange, timeChange, finishEdit}) {
 
     return  <div className="info-blocks__section host">
                 <h2 className="info-blocks__title">Host city</h2>
+
                 <div className="info-blocks__city">
                     <input 
                         type="text" 

@@ -14,8 +14,16 @@ class AutocompleteApiService {
     }
 
     getItems = async (input) => {
-        const res = await this.getResource (`${this._apiBase}?text=${input}&${this._apiFormat}&${this._apiKey}`);
-        return res;
+        const res = await this.getResource (`${this._apiBase}?text=${input}&type=city&${this._apiFormat}&${this._apiKey}`);
+        return res.results.map(this._sortData);
+    }
+
+    _sortData = (item) => {
+        return {
+            city: item.city ? item.city : null,
+            state: item.state ? item.state : null,
+            country: item.country ? item.country : null
+        }
     }
 
 
