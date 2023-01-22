@@ -1,23 +1,31 @@
 
 import './HostCity.scss';
 
+import DropDown from '../dropDown/DropDown';
+
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 
-function HostCity({city, day, time, handleChange, dateChange, timeChange, finishEdit}) {
+
+function HostCity({city, day, time, handleChange, dateChange, timeChange, finishEdit,  autocomplete, suggestions}) {
+    
+    const dropdown = autocomplete ? <DropDown suggestions={suggestions}/> : null;
+
 
     return  <div className="info-blocks__section host">
                 <h2 className="info-blocks__title">Host city</h2>
 
                 <div className="info-blocks__city">
                     <input 
+                        autoFocus
                         type="text" 
                         placeholder='Enter the host city' 
                         value={city}
                         onChange={event => handleChange('baseCity', event)}
                         onBlur={finishEdit}
                     />
+                    {dropdown}
                 </div>
 
                 <DatePicker 

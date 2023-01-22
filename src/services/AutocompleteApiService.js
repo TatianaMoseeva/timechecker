@@ -20,6 +20,7 @@ class AutocompleteApiService {
 
     _sortData = (item) => {
         return {
+            id: item.place_id,
             city: item.city ? item.city : null,
             state: item.state ? item.state : null,
             country: item.country ? item.country : null

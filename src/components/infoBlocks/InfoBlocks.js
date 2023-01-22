@@ -25,6 +25,8 @@ function InfoBlocks() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
+    const [autocomplete, setAutocomplete] = useState(false);
+    const [suggestions, setSuggestions] = useState([]);
 
     const onError = () => {
         setError(true);
@@ -32,17 +34,18 @@ function InfoBlocks() {
     }
 
     useEffect(() => {
-        if (value.baseCity.length >=3) {
+        if (value.baseCity.length >= 3) {
             const currentTimeout = setTimeout(() => {
                 autocompleteCity(value.baseCity);
-              }, 1000);
-              return () => clearTimeout(currentTimeout);
+            }, 1000);
+            return () => clearTimeout(currentTimeout);
         }
         // eslint-disable-next-line
     }, [value.baseCity]);
 
 
     const autocompleteCity = (input) => {
+        
         autocompleteApiService
             .getItems(input)
             .then(showItems)
@@ -50,7 +53,8 @@ function InfoBlocks() {
     }
 
     const showItems = (data) => {
-        console.log(data);
+        setAutocomplete(true);
+        setSuggestions(data);
     }
 
     function handleChange(prop, event) {
@@ -112,13 +116,10 @@ function InfoBlocks() {
 		setValue({...value, ...{baseTime: date}});
 	}
 
-
-
-
     
     const errorMsg = error ? <ErrorMsg/> : null;
     
-    const content = !(error) ? <View value={value} dateChange={dateChange} timeChange={timeChange} handleChange={handleChange} finishEdit={finishEdit} loading={loading} prefillCity={prefillCity}/> : null;
+    const content = !(error) ? <View value={value} dateChange={dateChange} timeChange={timeChange} handleChange={handleChange} finishEdit={finishEdit} loading={loading} prefillCity={prefillCity} autocomplete={autocomplete} suggestions={suggestions}/> : null;
 
     return <main className="info-blocks">
                 {errorMsg}
@@ -127,13 +128,13 @@ function InfoBlocks() {
 
 }
   
-const View = ({value, handleChange, dateChange, timeChange, finishEdit, loading, prefillCity}) => {
+const View = ({value, handleChange, dateChange, timeChange, finishEdit, loading, prefillCity, autocomplete, suggestions}) => {
     const {baseCity, baseDay, baseTime, targetCity, targetDay, targetTime} = value;
 
     return (
         <>
             <Row xs={1} sm={2}>
-                <Col><HostCity dateChange={dateChange} timeChange={timeChange} city={baseCity} day={baseDay} time={baseTime} handleChange={handleChange} finishEdit={finishEdit}/></Col>
+                <Col><HostCity dateChange={dateChange} timeChange={timeChange} city={baseCity} day={baseDay} time={baseTime} handleChange={handleChange} finishEdit={finishEdit} autocomplete={autocomplete} suggestions={suggestions}/></Col>
                 <Col><TargetCity city={targetCity} day={targetDay} time={targetTime} handleChange={handleChange} finishEdit={finishEdit} loading={loading} prefillCity={prefillCity}/></Col>
             </Row>
             <CopyMsg />
