@@ -1,30 +1,29 @@
+function DropDown({suggestions, itemClickHandler}) {
 
-function DropDown({suggestions}) {
-    
     const items = suggestions.map(item => {
         return  <CityItem
                     key = {item.id}
                     city = {item.city}
                     state = {item.state}
                     country = {item.country}
+                    itemClickHandler={itemClickHandler}
                 />;
     });
 
     return (
-        <div className="info-blocks__city-items">
+        <ul className="info-blocks__city-items">
             {items}
-
-        </div>
-
+        </ul>
     )
 }
 
-const CityItem = ({city, state, country}) => {
-    
-    return  <div>
-        {city}, {state}, {country}
-    </div>
-        
+
+
+const CityItem = ({city, state, country, itemClickHandler}) => {
+    return  <li onClick={itemClickHandler}>
+                {city}{state}{country}
+            </li>
+
 }
 
   

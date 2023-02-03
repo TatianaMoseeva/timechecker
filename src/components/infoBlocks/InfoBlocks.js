@@ -25,9 +25,9 @@ function InfoBlocks() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
-    const [autocomplete, setAutocomplete] = useState(false);
+    const [autocomplete, setAutocomplete] = useState(true);
     const [suggestions, setSuggestions] = useState([]);
-
+ 
     const onError = () => {
         setError(true);
         setLoading(false);
@@ -37,15 +37,21 @@ function InfoBlocks() {
         if (value.baseCity.length >= 3) {
             const currentTimeout = setTimeout(() => {
                 autocompleteCity(value.baseCity);
-            }, 1000);
+            }, 500);
             return () => clearTimeout(currentTimeout);
         }
         // eslint-disable-next-line
     }, [value.baseCity]);
 
+    useEffect(() => {
+        if (!autocomplete) {
+            console.log(value.baseCity);
+            finishEdit();
+        }
+        // eslint-disable-next-line
+    }, [autocomplete])
 
     const autocompleteCity = (input) => {
-        
         autocompleteApiService
             .getItems(input)
             .then(showItems)
@@ -53,8 +59,16 @@ function InfoBlocks() {
     }
 
     const showItems = (data) => {
-        setAutocomplete(true);
         setSuggestions(data);
+    }
+
+    const inputClickHandler = () => {
+        setAutocomplete(true);
+    }
+
+    const itemClickHandler = (event) => {
+        setValue({...value, ...{baseCity: event.target.textContent}});
+        setAutocomplete(false);
     }
 
     function handleChange(prop, event) {
@@ -119,7 +133,7 @@ function InfoBlocks() {
     
     const errorMsg = error ? <ErrorMsg/> : null;
     
-    const content = !(error) ? <View value={value} dateChange={dateChange} timeChange={timeChange} handleChange={handleChange} finishEdit={finishEdit} loading={loading} prefillCity={prefillCity} autocomplete={autocomplete} suggestions={suggestions}/> : null;
+    const content = !(error) ? <View value={value} dateChange={dateChange} timeChange={timeChange} handleChange={handleChange} loading={loading} prefillCity={prefillCity} autocomplete={autocomplete} suggestions={suggestions} inputClickHandler={inputClickHandler} itemClickHandler={itemClickHandler}/> : null;
 
     return <main className="info-blocks">
                 {errorMsg}
@@ -128,14 +142,14 @@ function InfoBlocks() {
 
 }
   
-const View = ({value, handleChange, dateChange, timeChange, finishEdit, loading, prefillCity, autocomplete, suggestions}) => {
+const View = ({value, handleChange, dateChange, timeChange, loading, prefillCity, autocomplete, suggestions, inputClickHandler, itemClickHandler}) => {
     const {baseCity, baseDay, baseTime, targetCity, targetDay, targetTime} = value;
 
     return (
         <>
             <Row xs={1} sm={2}>
-                <Col><HostCity dateChange={dateChange} timeChange={timeChange} city={baseCity} day={baseDay} time={baseTime} handleChange={handleChange} finishEdit={finishEdit} autocomplete={autocomplete} suggestions={suggestions}/></Col>
-                <Col><TargetCity city={targetCity} day={targetDay} time={targetTime} handleChange={handleChange} finishEdit={finishEdit} loading={loading} prefillCity={prefillCity}/></Col>
+                <Col><HostCity dateChange={dateChange} timeChange={timeChange} city={baseCity} day={baseDay} time={baseTime} handleChange={handleChange} autocomplete={autocomplete} suggestions={suggestions} inputClickHandler={inputClickHandler} itemClickHandler={itemClickHandler}/></Col>
+                <Col><TargetCity city={targetCity} day={targetDay} time={targetTime} handleChange={handleChange} loading={loading} prefillCity={prefillCity}/></Col>
             </Row>
             <CopyMsg />
         </>

@@ -7,11 +7,9 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 
+function HostCity({city, day, time, handleChange, dateChange, timeChange,  autocomplete, suggestions, inputClickHandler, itemClickHandler}) {
 
-function HostCity({city, day, time, handleChange, dateChange, timeChange, finishEdit,  autocomplete, suggestions}) {
-    
-    const dropdown = autocomplete ? <DropDown suggestions={suggestions}/> : null;
-
+    const dropdown = autocomplete && city ? <DropDown suggestions={suggestions} itemClickHandler={itemClickHandler}/> : null;
 
     return  <div className="info-blocks__section host">
                 <h2 className="info-blocks__title">Host city</h2>
@@ -23,7 +21,7 @@ function HostCity({city, day, time, handleChange, dateChange, timeChange, finish
                         placeholder='Enter the host city' 
                         value={city}
                         onChange={event => handleChange('baseCity', event)}
-                        onBlur={finishEdit}
+                        onClick={inputClickHandler}
                     />
                     {dropdown}
                 </div>
