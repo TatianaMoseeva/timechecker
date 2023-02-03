@@ -1,7 +1,7 @@
 import './TargetCity.scss';
 import React, {useEffect} from 'react';
 
-function TargetCity({city, day, time, handleChange, finishEdit, loading, prefillCity}) {
+function TargetCity({city, day, time, handleChange, loading, prefillCity}) {
 
     useEffect(() => {
         prefillCity();
@@ -21,7 +21,7 @@ function TargetCity({city, day, time, handleChange, finishEdit, loading, prefill
                     placeholder='City'
                     value={city}
                     onChange={event => handleChange('targetCity', event)}
-                    onBlur={finishEdit}
+
                 />
                 <input 
                     type="text" 

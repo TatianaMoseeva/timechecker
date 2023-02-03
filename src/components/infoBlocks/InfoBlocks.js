@@ -37,7 +37,7 @@ function InfoBlocks() {
         if (value.baseCity.length >= 3) {
             const currentTimeout = setTimeout(() => {
                 autocompleteCity(value.baseCity);
-            }, 500);
+            }, 300);
             return () => clearTimeout(currentTimeout);
         }
         // eslint-disable-next-line
@@ -45,11 +45,17 @@ function InfoBlocks() {
 
     useEffect(() => {
         if (!autocomplete) {
-            console.log(value.baseCity);
             finishEdit();
         }
         // eslint-disable-next-line
     }, [autocomplete])
+
+    useEffect(() => {
+        if (!autocomplete) {
+            finishEdit();
+        }
+        // eslint-disable-next-line
+    }, [value.baseTime, value.baseDay])
 
     const autocompleteCity = (input) => {
         autocompleteApiService
