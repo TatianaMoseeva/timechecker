@@ -25,9 +25,12 @@ function InfoBlocks() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
-    const [autocomplete, setAutocomplete] = useState(true);
     const [suggestions, setSuggestions] = useState([]);
  
+    const [autocompleteHost, setAutocompleteHost] = useState(true);
+    const [autocompleteTarget, setAutocompleteTarget] = useState(false);
+
+
     const onError = () => {
         setError(true);
         setLoading(false);
@@ -44,18 +47,37 @@ function InfoBlocks() {
     }, [value.baseCity]);
 
     useEffect(() => {
-        if (!autocomplete) {
-            finishEdit();
+        if (value.targetCity.length >= 3) {
+            const currentTimeout = setTimeout(() => {
+                autocompleteCity(value.targetCity);
+            }, 300);
+            return () => clearTimeout(currentTimeout);
         }
         // eslint-disable-next-line
-    }, [autocomplete])
+    }, [value.targetCity]);
+
 
     useEffect(() => {
-        if (!autocomplete) {
+        if (!autocompleteHost) {
             finishEdit();
         }
         // eslint-disable-next-line
-    }, [value.baseTime, value.baseDay])
+    }, [autocompleteHost])
+
+    useEffect(() => {
+        if (!autocompleteTarget) {
+            finishEdit();
+        }
+        // eslint-disable-next-line
+    }, [autocompleteTarget])
+
+    
+    // useEffect(() => {
+    //     if (!autocomplete) {
+    //         finishEdit();
+    //     }
+    //     // eslint-disable-next-line
+    // }, [value.baseTime, value.baseDay])
 
     const autocompleteCity = (input) => {
         autocompleteApiService
@@ -68,14 +90,20 @@ function InfoBlocks() {
         setSuggestions(data);
     }
 
-    const inputClickHandler = () => {
-        setAutocomplete(true);
+    const inputClickHandler = (event) => {
+        if (event.target.name === 'host') {
+            setAutocompleteHost(true);
+        } else {
+            setAutocompleteTarget(true);
+        }
     }
 
-    const itemClickHandler = (event) => {
-        setValue({...value, ...{baseCity: event.target.textContent}});
-        setAutocomplete(false);
+    const itemClickHandler = (prop, event) => {
+        setValue({...value, ...{[prop]: event.target.textContent}});
+        setAutocompleteHost(false);
+        setAutocompleteTarget(false);
     }
+
 
     function handleChange(prop, event) {
 		setValue({...value, ...{[prop]: event.target.value}});
@@ -139,7 +167,7 @@ function InfoBlocks() {
     
     const errorMsg = error ? <ErrorMsg/> : null;
     
-    const content = !(error) ? <View value={value} dateChange={dateChange} timeChange={timeChange} handleChange={handleChange} loading={loading} prefillCity={prefillCity} autocomplete={autocomplete} suggestions={suggestions} inputClickHandler={inputClickHandler} itemClickHandler={itemClickHandler}/> : null;
+    const content = !(error) ? <View value={value} dateChange={dateChange} timeChange={timeChange} handleChange={handleChange} loading={loading} prefillCity={prefillCity} suggestions={suggestions} inputClickHandler={inputClickHandler} itemClickHandler={itemClickHandler} autocompleteHost={autocompleteHost} autocompleteTarget={autocompleteTarget}/> : null;
 
     return <main className="info-blocks">
                 {errorMsg}
@@ -148,14 +176,14 @@ function InfoBlocks() {
 
 }
   
-const View = ({value, handleChange, dateChange, timeChange, loading, prefillCity, autocomplete, suggestions, inputClickHandler, itemClickHandler}) => {
+const View = ({value, handleChange, dateChange, timeChange, loading, prefillCity, suggestions, inputClickHandler, itemClickHandler, autocompleteHost, autocompleteTarget}) => {
     const {baseCity, baseDay, baseTime, targetCity, targetDay, targetTime} = value;
 
     return (
         <>
             <Row xs={1} sm={2}>
-                <Col><HostCity dateChange={dateChange} timeChange={timeChange} city={baseCity} day={baseDay} time={baseTime} handleChange={handleChange} autocomplete={autocomplete} suggestions={suggestions} inputClickHandler={inputClickHandler} itemClickHandler={itemClickHandler}/></Col>
-                <Col><TargetCity city={targetCity} day={targetDay} time={targetTime} handleChange={handleChange} loading={loading} prefillCity={prefillCity}/></Col>
+                <Col><HostCity dateChange={dateChange} timeChange={timeChange} city={baseCity} day={baseDay} time={baseTime} handleChange={handleChange} suggestions={suggestions} inputClickHandler={inputClickHandler} itemClickHandler={itemClickHandler} autocompleteHost={autocompleteHost}/></Col>
+                <Col><TargetCity city={targetCity} day={targetDay} time={targetTime} handleChange={handleChange} loading={loading} prefillCity={prefillCity} suggestions={suggestions} inputClickHandler={inputClickHandler} itemClickHandler={itemClickHandler} autocompleteTarget={autocompleteTarget}/></Col>
             </Row>
             <CopyMsg />
         </>

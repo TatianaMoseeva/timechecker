@@ -7,12 +7,12 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 
-function HostCity({city, day, time, handleChange, dateChange, timeChange,  autocomplete, suggestions, inputClickHandler, itemClickHandler}) {
+function HostCity({city, day, time, handleChange, dateChange, timeChange, suggestions, inputClickHandler, itemClickHandler, autocompleteHost}) {
 
-    const dropdown = autocomplete && city.length >= 3 
+    const dropdown = autocompleteHost && city.length >= 3 
         ? <DropDown 
             suggestions={suggestions} 
-            itemClickHandler={itemClickHandler}/> 
+            itemClickHandler={itemClickHandler} autocompleteHost={autocompleteHost}/> 
         : null;
 
     return  <div className="info-blocks__section host">
@@ -20,12 +20,12 @@ function HostCity({city, day, time, handleChange, dateChange, timeChange,  autoc
 
                 <div className="info-blocks__city">
                     <input 
-                        autoFocus
-                        type="text" 
+                        type="text"
+                        name="host"
                         placeholder='Enter the host city' 
                         value={city}
                         onChange={event => handleChange('baseCity', event)}
-                        onClick={inputClickHandler}
+                        onClick={event => inputClickHandler(event)}
                     />
                     {dropdown}
                 </div>
