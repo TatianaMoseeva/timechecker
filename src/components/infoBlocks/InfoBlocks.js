@@ -72,12 +72,12 @@ function InfoBlocks() {
     }, [autocompleteTarget])
 
     
-    // useEffect(() => {
-    //     if (!autocomplete) {
-    //         finishEdit();
-    //     }
-    //     // eslint-disable-next-line
-    // }, [value.baseTime, value.baseDay])
+    useEffect(() => {
+        if (!autocompleteHost && ! autocompleteTarget) {
+            finishEdit();
+        }
+        // eslint-disable-next-line
+    }, [value.baseTime, value.baseDay])
 
     const autocompleteCity = (input) => {
         autocompleteApiService
@@ -93,8 +93,10 @@ function InfoBlocks() {
     const inputClickHandler = (event) => {
         if (event.target.name === 'host') {
             setAutocompleteHost(true);
+            setSuggestions([]);
         } else {
             setAutocompleteTarget(true);
+            setSuggestions([]);
         }
     }
 
