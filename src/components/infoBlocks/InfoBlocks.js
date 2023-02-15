@@ -187,7 +187,7 @@ const View = ({value, handleChange, dateChange, timeChange, loading, prefillCity
                 <Col><HostCity dateChange={dateChange} timeChange={timeChange} city={baseCity} day={baseDay} time={baseTime} handleChange={handleChange} suggestions={suggestions} inputClickHandler={inputClickHandler} itemClickHandler={itemClickHandler} autocompleteHost={autocompleteHost}/></Col>
                 <Col><TargetCity city={targetCity} day={targetDay} time={targetTime} handleChange={handleChange} loading={loading} prefillCity={prefillCity} suggestions={suggestions} inputClickHandler={inputClickHandler} itemClickHandler={itemClickHandler} autocompleteTarget={autocompleteTarget}/></Col>
             </Row>
-            <CopyMsg value={value} normalizeNumb={normalizeNumb}/>
+            <CopyMsg value={value} normalizeNumb={normalizeNumb} loading={loading}/>
         </>
     )
 }

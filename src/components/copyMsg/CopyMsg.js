@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import Skeleton from '../skeleton/Skeleton';
+import Loading from '../loading/Loading';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -10,7 +11,7 @@ import { faCopy } from '@fortawesome/free-solid-svg-icons'
 
 import './CopyMsg.scss';
 
-function CopyMsg({value, normalizeNumb}) {
+function CopyMsg({value, normalizeNumb, loading}) {
     
 
     const [message, setMessage] = useState(false);
@@ -23,14 +24,17 @@ function CopyMsg({value, normalizeNumb}) {
     }, [value.targetDay, value.targetTime])
 
 
-    const skeleton = !message ? <Skeleton/> : null;
-    const content = message ? <View value={value} normalizeNumb={normalizeNumb}/> : null;
+    const skeleton = message || loading ? null : <Skeleton/>;
+    const spinner = loading ? <Loading/> : null;
+    const content = message && !loading ? <View value={value} normalizeNumb={normalizeNumb}/> : null;
+
 
     return <aside className="msg">
                 <Row>
                     <Col md={{ span: 6, offset: 3 }} style={{position: "relative"}}>
                         <div className="msg__body">
                             {skeleton}
+                            {spinner}
                             {content}
                         </div>
                         
@@ -82,9 +86,7 @@ function CopyMsg({value, normalizeNumb}) {
                 <CopyToClipboard text={message}>
                     <FontAwesomeIcon icon={faCopy} title="Copy" />
                 </CopyToClipboard>
-                
             </div>
-        
         </>
 
     }

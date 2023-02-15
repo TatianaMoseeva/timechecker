@@ -8,8 +8,8 @@ const Loading = () => {
           display: "block",
           shapeRendering: "auto",
         }}
-        width={137}
-        height={137}
+        width={50}
+        height={50}
         viewBox="0 0 100 100"
         preserveAspectRatio="xMidYMid"
       >
