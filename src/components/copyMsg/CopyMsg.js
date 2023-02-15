@@ -48,11 +48,29 @@ function CopyMsg({value, normalizeNumb}) {
         }
 
         const drawTime = (time) => {
-            return normalizeNumb(new Date(time).getHours()) + ':' + normalizeNumb(new Date(time).getMinutes());
+            return editTimeFormat(normalizeNumb(new Date(time).getHours()) + ':' + normalizeNumb(new Date(time).getMinutes()));
+        }
+
+        const editTimeFormat = (time) => {
+            let hour = time.slice(0, 2);
+            let minute = ':' + time.slice(3, 5);
+            let result;
+            
+            if (hour === '12') {
+                result = hour + minute + ' PM';
+            } else if (hour > 12 ) {
+                if(hour < 22) {
+                    result = '0' + String(hour - 12) + minute + ' PM'; 
+                } else {
+                    result = String(hour - 12) + minute + ' PM';
+                }
+            } else {
+                result = hour + minute + ' AM';
+            }
+            return result;
         }
 
         const hostDay = drawDay(baseDay);
-
         const hostTime = drawTime(baseTime);
 
 
