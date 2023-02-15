@@ -35,6 +35,9 @@ function HostCity({city, day, time, handleChange, dateChange, timeChange, sugges
                     onChange={dateChange}
                     dateFormat="dd-MMM-yyyy"
                     placeholder='Click to choose the day'
+                    onKeyDown={(e) => {
+                        e.preventDefault();
+                     }}
                 />
 
                 <DatePicker 
@@ -46,6 +49,9 @@ function HostCity({city, day, time, handleChange, dateChange, timeChange, sugges
                     timeCaption="Time"
                     dateFormat="hh:mm a"
                     placeholder='Click to choose time'
+                    onKeyDown={(e) => {
+                        e.preventDefault();
+                     }}
                 />
 
             </div>
