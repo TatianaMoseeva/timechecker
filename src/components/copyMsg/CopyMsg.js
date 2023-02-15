@@ -4,6 +4,7 @@ import Skeleton from '../skeleton/Skeleton';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCopy } from '@fortawesome/free-solid-svg-icons'
 
@@ -18,7 +19,6 @@ function CopyMsg({value, normalizeNumb}) {
         if (value.targetDay !== '' && value.targetTime !== '') {
             setMessage(true);
         }
-       
         // eslint-disable-next-line
     }, [value.targetDay, value.targetTime])
 
@@ -29,7 +29,7 @@ function CopyMsg({value, normalizeNumb}) {
     return <aside className="msg">
                 <Row>
                     <Col md={{ span: 6, offset: 3 }} style={{position: "relative"}}>
-                        <div className="msg__text">
+                        <div className="msg__body">
                             {skeleton}
                             {content}
                         </div>
@@ -44,7 +44,7 @@ function CopyMsg({value, normalizeNumb}) {
 
         const drawDay = (day) => {
             const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-            return new Date(day).getDate() + '-' + months[new Date(day).getMonth()] + '-' + new Date(day).getFullYear();
+            return normalizeNumb(new Date(day).getDate()) + '-' + months[new Date(day).getMonth()] + '-' + new Date(day).getFullYear();
         }
 
         const drawTime = (time) => {
@@ -73,11 +73,16 @@ function CopyMsg({value, normalizeNumb}) {
         const hostDay = drawDay(baseDay);
         const hostTime = drawTime(baseTime);
 
+        const message = `On ${hostDay} at ${hostTime} in ${baseCity} it will be ${targetDay} ${targetTime} in ${targetCity}`;
 
         return <>
-            <div>On {hostDay} at {hostTime} in {baseCity} it will be {targetDay} {targetTime} in {targetCity}</div>
+            <div>{message}</div>
+
             <div className="msg__icon">
-                <FontAwesomeIcon icon={faCopy} title="Copy" />
+                <CopyToClipboard text={message}>
+                    <FontAwesomeIcon icon={faCopy} title="Copy" />
+                </CopyToClipboard>
+                
             </div>
         
         </>
