@@ -142,8 +142,8 @@ function InfoBlocks() {
 
     const updateTime = () => {
         onDataLoading();
-
-        let day = value.baseDay.getFullYear() + '-' + value.baseDay.getMonth()+1 + '-' + normalizeNumb(value.baseDay.getDate());
+       
+        let day = value.baseDay.getFullYear() + '-' + normalizeNumb(value.baseDay.getMonth()+1) + '-' + normalizeNumb(value.baseDay.getDate());
         let time = normalizeNumb(value.baseTime.getHours()) + ':' + value.baseTime.getMinutes();
 
         timeApiService
@@ -169,7 +169,7 @@ function InfoBlocks() {
     
     const errorMsg = error ? <ErrorMsg/> : null;
     
-    const content = !(error) ? <View value={value} dateChange={dateChange} timeChange={timeChange} handleChange={handleChange} loading={loading} prefillCity={prefillCity} suggestions={suggestions} inputClickHandler={inputClickHandler} itemClickHandler={itemClickHandler} autocompleteHost={autocompleteHost} autocompleteTarget={autocompleteTarget}/> : null;
+    const content = !(error) ? <View value={value} dateChange={dateChange} timeChange={timeChange} handleChange={handleChange} loading={loading} prefillCity={prefillCity} suggestions={suggestions} inputClickHandler={inputClickHandler} itemClickHandler={itemClickHandler} autocompleteHost={autocompleteHost} autocompleteTarget={autocompleteTarget} normalizeNumb={normalizeNumb}/> : null;
 
     return <main className="info-blocks">
                 {errorMsg}
@@ -178,7 +178,7 @@ function InfoBlocks() {
 
 }
   
-const View = ({value, handleChange, dateChange, timeChange, loading, prefillCity, suggestions, inputClickHandler, itemClickHandler, autocompleteHost, autocompleteTarget}) => {
+const View = ({value, handleChange, dateChange, timeChange, loading, prefillCity, suggestions, inputClickHandler, itemClickHandler, autocompleteHost, autocompleteTarget, normalizeNumb}) => {
     const {baseCity, baseDay, baseTime, targetCity, targetDay, targetTime} = value;
 
     return (
@@ -187,7 +187,7 @@ const View = ({value, handleChange, dateChange, timeChange, loading, prefillCity
                 <Col><HostCity dateChange={dateChange} timeChange={timeChange} city={baseCity} day={baseDay} time={baseTime} handleChange={handleChange} suggestions={suggestions} inputClickHandler={inputClickHandler} itemClickHandler={itemClickHandler} autocompleteHost={autocompleteHost}/></Col>
                 <Col><TargetCity city={targetCity} day={targetDay} time={targetTime} handleChange={handleChange} loading={loading} prefillCity={prefillCity} suggestions={suggestions} inputClickHandler={inputClickHandler} itemClickHandler={itemClickHandler} autocompleteTarget={autocompleteTarget}/></Col>
             </Row>
-            <CopyMsg />
+            <CopyMsg value={value} normalizeNumb={normalizeNumb}/>
         </>
     )
 }

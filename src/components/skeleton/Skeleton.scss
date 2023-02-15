@@ -1,0 +1,31 @@
+.pulse {
+    animation: pulse 3s ease-in-out 1s infinite
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1
+    }
+    50% {
+        opacity: .6
+    }
+    100% {
+        opacity: 1
+    }
+}
+
+.skeleton {
+    &__header {
+        width: 60%;
+        height: 15px;
+        background-color: #9e9e9e;
+        border-radius: 3px;
+    }
+    &__block {
+        height: 10px;
+        width: 100%;
+        background-color: #9e9e9e;
+        border-radius: 3px;
+        margin-top: 10px;
+    }
+}
