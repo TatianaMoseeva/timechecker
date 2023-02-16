@@ -2,7 +2,7 @@ import './Header.scss';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-function Header() {
+const Header = () => {
 
     return <header className="header">
                 <Row>

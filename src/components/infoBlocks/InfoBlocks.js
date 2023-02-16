@@ -15,7 +15,7 @@ import Col from 'react-bootstrap/Col';
 import './InfoBlocks.scss';
 
 
-function InfoBlocks() {
+const InfoBlocks = () => {
 
     const timeApiService = new TimeApiService();
     const geoApiService = new GeoApiService();
@@ -40,7 +40,7 @@ function InfoBlocks() {
         if (value.baseCity.length >= 3) {
             const currentTimeout = setTimeout(() => {
                 autocompleteCity(value.baseCity);
-            }, 300);
+            }, 200);
             return () => clearTimeout(currentTimeout);
         }
         // eslint-disable-next-line
@@ -50,12 +50,11 @@ function InfoBlocks() {
         if (value.targetCity.length >= 3) {
             const currentTimeout = setTimeout(() => {
                 autocompleteCity(value.targetCity);
-            }, 300);
+            }, 200);
             return () => clearTimeout(currentTimeout);
         }
         // eslint-disable-next-line
     }, [value.targetCity]);
-
 
     useEffect(() => {
         if (!autocompleteHost) {
@@ -106,9 +105,9 @@ function InfoBlocks() {
         setAutocompleteTarget(false);
     }
 
-
-    function handleChange(prop, event) {
+    const handleChange = (prop, event) => {
 		setValue({...value, ...{[prop]: event.target.value}});
+        setLoading(true);
         event.preventDefault();
 	}
 
@@ -132,7 +131,7 @@ function InfoBlocks() {
         setValue({...value, ...time});
     }
 
-    function normalizeNumb(num) {
+    const normalizeNumb = (num) => {
         let newNum = String(num);
         if (String(num).length === 1) {
             newNum = '0' + String(num);
@@ -152,17 +151,17 @@ function InfoBlocks() {
             .catch(onError);
     }
     
-    function dateChange(date) {
+    const dateChange = (date) => {
         setValue({...value, ...{baseDay: date}})
 	}
 
-    function finishEdit() {
+    const finishEdit = () => {
         if (value.baseCity !== '' && value.targetCity !== '') {
             updateTime();
         }
     }
 
-    function timeChange(date) {
+    const timeChange = (date) => {
 		setValue({...value, ...{baseTime: date}});
 	}
 

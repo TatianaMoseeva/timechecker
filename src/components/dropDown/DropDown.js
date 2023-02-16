@@ -1,5 +1,5 @@
-function DropDown({suggestions, itemClickHandler, autocompleteHost}) {
-
+const DropDown = ({suggestions, itemClickHandler, autocompleteHost}) => {
+    
     const items = suggestions.map(item => {
         return  <CityItem
                     key = {item.id}
@@ -19,9 +19,10 @@ function DropDown({suggestions, itemClickHandler, autocompleteHost}) {
 }
 
 
-
 const CityItem = ({city, state, country, itemClickHandler, autocompleteHost}) => {
+
     const prop = autocompleteHost ? 'baseCity' : 'targetCity';
+
     return  <li onClick={event => itemClickHandler(prop, event)}>
                 {city}{state}{country}
             </li>

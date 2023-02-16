@@ -6,7 +6,7 @@ import ErrorBoundary from '../errorBoundary/ErrorBoundary';
 
 import './App.scss';
 
-function App() {
+const App = () => {
 
   return <Container>
             <Header />

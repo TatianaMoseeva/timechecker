@@ -11,9 +11,8 @@ import { faCopy } from '@fortawesome/free-solid-svg-icons'
 
 import './CopyMsg.scss';
 
-function CopyMsg({value, normalizeNumb, loading}) {
+const CopyMsg = ({value, normalizeNumb, loading}) => {
     
-
     const [message, setMessage] = useState(false);
 
     useEffect(() => {
@@ -23,26 +22,24 @@ function CopyMsg({value, normalizeNumb, loading}) {
         // eslint-disable-next-line
     }, [value.targetDay, value.targetTime])
 
-
     const skeleton = message || loading ? null : <Skeleton/>;
     const spinner = loading ? <Loading/> : null;
     const content = message && !loading ? <View value={value} normalizeNumb={normalizeNumb}/> : null;
 
-
     return <aside className="msg">
                 <Row>
                     <Col md={{ span: 6, offset: 3 }} style={{position: "relative"}}>
-                        <div className="msg__body">
+                        
                             {skeleton}
                             {spinner}
                             {content}
-                        </div>
                         
                     </Col>
                 </Row>
             </aside>
     }
   
+    
     const View = ({value, normalizeNumb}) => {
         const {baseCity, baseDay, baseTime, targetCity, targetDay, targetTime} = value;
 
@@ -80,7 +77,7 @@ function CopyMsg({value, normalizeNumb, loading}) {
         const message = `On ${hostDay} at ${hostTime} in ${baseCity} it will be ${targetDay} ${targetTime} in ${targetCity}`;
 
         return <>
-            <div>{message}</div>
+            <div className="msg__body">{message}</div>
 
             <div className="msg__icon">
                 <CopyToClipboard text={message}>

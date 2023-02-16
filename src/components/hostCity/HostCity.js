@@ -1,4 +1,3 @@
-
 import './HostCity.scss';
 
 import DropDown from '../dropDown/DropDown';
@@ -7,14 +6,18 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 
-function HostCity({city, day, time, handleChange, dateChange, timeChange, suggestions, inputClickHandler, itemClickHandler, autocompleteHost}) {
+const HostCity = ({city, day, time, handleChange, dateChange, timeChange, suggestions, inputClickHandler, itemClickHandler, autocompleteHost}) => {
+
 
     const dropdown = autocompleteHost && city.length >= 3 
         ? <DropDown 
             suggestions={suggestions} 
-            itemClickHandler={itemClickHandler} autocompleteHost={autocompleteHost}/> 
+            itemClickHandler={itemClickHandler} 
+            autocompleteHost={autocompleteHost}
+            /> 
         : null;
-
+    
+    
     return  <div className="info-blocks__section host">
                 <h2 className="info-blocks__title">Host city</h2>
 
@@ -37,7 +40,7 @@ function HostCity({city, day, time, handleChange, dateChange, timeChange, sugges
                     placeholder='Click to choose the day'
                     onKeyDown={(e) => {
                         e.preventDefault();
-                     }}
+                    }}
                 />
 
                 <DatePicker 
@@ -51,7 +54,7 @@ function HostCity({city, day, time, handleChange, dateChange, timeChange, sugges
                     placeholder='Click to choose time'
                     onKeyDown={(e) => {
                         e.preventDefault();
-                     }}
+                    }}
                 />
 
             </div>

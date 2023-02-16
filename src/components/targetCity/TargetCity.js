@@ -4,7 +4,7 @@ import React, {useEffect} from 'react';
 import DropDown from '../dropDown/DropDown';
 
 
-function TargetCity({city, day, time, handleChange, loading, prefillCity, suggestions, inputClickHandler, itemClickHandler, autocompleteTarget}) {
+const TargetCity = ({city, day, time, handleChange, loading, prefillCity, suggestions, inputClickHandler, itemClickHandler, autocompleteTarget}) => {
 
     useEffect(() => {
         prefillCity();
