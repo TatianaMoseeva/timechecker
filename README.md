@@ -1,4 +1,5 @@
-# A Timechecker app helps to organise online meetings for participants from different time zones. Check what time and day it will be in two different cities at one point of time
+# A Timechecker app helps to organise online meetings for participants from different time zones. 
+### Check what time and day it will be in two different cities at one point of time
 
 ## Link
 [Project on Github pages](https://tatianamoseeva.github.io/timechecker/)
