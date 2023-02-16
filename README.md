@@ -4,7 +4,7 @@
 ## Link
 [Project on Github pages](https://tatianamoseeva.github.io/timechecker/)
 
-<img src="https://github.com/TatianaMoseeva/notebook-react/blob/main/timechecker.gif" width="400" />
+<img src="https://github.com/TatianaMoseeva/timechecker/blob/main/timechecker.gif" width="500" />
 
 ## Features 
 :star: Developed with Create React App  
